@@ -1,5 +1,4 @@
 from requests import get
-from bs4 import BeautifulSoup as bsoup
 import pandas as pd
 import datetime
 
@@ -26,11 +25,13 @@ data = get_data(endpoint)
 # Convert to dataframe
 df = pd.DataFrame.from_dict(data['data'], orient='columns')
 
-import requests as reqs
+# Empty list
 file_urls = []
 
 # Vaccination data file pull
 def vax_capture(vax_source):
+    import requests as reqs
+    from bs4 import BeautifulSoup as bsoup
     vax_source = 'https://www.england.nhs.uk/statistics/statistical-work-areas/covid-19-vaccinations/'
     file_page = bsoup(reqs.get(vax_source).content, 'html.parser')
     file_capture = file_page.find_all('p')
